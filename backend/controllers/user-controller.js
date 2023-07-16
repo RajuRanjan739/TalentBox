@@ -49,6 +49,13 @@ const login = async (req, res, next) => {
   const token = jwt.sign({ id: existingUser._id }, JWT_SECRET_KEY, {
     expiresIn: "7d",
   });
+
+  console.log("Generated Token\n", token);
+
+  if (req.cookies[`${existingUser._id}`]) {
+    req.cookies[`${existingUser._id}`] = "";
+  }
+
   res.cookie(String(existingUser._id), token, {
     path: "/",
     expires: new Date(Date.now() + 1000 * 9000),
@@ -108,7 +115,7 @@ const refreshToken = (req, res, next) => {
     res.clearCookie(`${user.id}`);
     req.cookies[`${user.id}`] = "";
 
-    const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET_KEY, {
+    const token = jwt.sign({ id: user.id }, JWT_SECRET_KEY, {
       expiresIn: "7d",
     });
     console.log("Regenerated Token\n", token);
