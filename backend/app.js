@@ -7,10 +7,18 @@ const cors = require("cors");
 const app = express();
 
 //Middleware
-app.use(cors({ credentials: true }));
+app.use(cors({ "origin": "*",
+"methods": "GET,HEAD,PUT,PATCH,POST,DELETE",
+"preflightContinue": false,
+"optionsSuccessStatus": 204,}));
 app.use(express.json());
 app.use(cookieParser());
 app.use("/", router);
+
+app.get("/", (req, res) => {
+  res.setHeader("Access-Control-Allow-Credentials","true");
+  res.send("API is running..");
+});
 
 mongoose
   .connect(
