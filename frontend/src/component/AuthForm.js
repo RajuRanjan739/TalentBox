@@ -27,7 +27,7 @@ const AuthForm = ({ onSubmit }) => {
   };
   const sendRequest = async (data, signup) => {
     const res = await axios
-      .post(`http://localhost:5000/${signup ? "signup" : "login"}`, {
+      .post(`https://talent-backend-box.onrender.com/${signup ? "signup" : "login"}`, {
         name: isSignup ? inputs.name : "",
         email: inputs.email,
         password: inputs.password,
